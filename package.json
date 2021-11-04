@@ -10,5 +10,9 @@
   "license": "ISC",
   "devDependencies": {
     "parcel": "^2.0.0"
+  },
+  "dependencies": {
+    "@types/three": "^0.133.1",
+    "three": "^0.134.0"
   }
 }
