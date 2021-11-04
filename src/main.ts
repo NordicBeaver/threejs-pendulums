@@ -20,15 +20,19 @@ let lastFrameTime: number | null = null;
 function animationFrame(time: number) {
   if (lastFrameTime == null) {
     lastFrameTime = time;
-    window.requestAnimationFrame(animationFrame);
-    return;
+  } else {
+    const deltaTime = time - lastFrameTime;
+    lastFrameTime = time;
+    update(deltaTime);
+    renderer.render(scene, camera);
   }
-  const deltaTime = time - lastFrameTime;
-  lastFrameTime = time;
+  window.requestAnimationFrame(animationFrame);
+}
+
+function update(deltaTime: number) {
   const rotationSpeed = 0.001;
   cube.rotation.x += deltaTime * rotationSpeed;
   cube.rotation.y += deltaTime * rotationSpeed;
-  renderer.render(scene, camera);
-  window.requestAnimationFrame(animationFrame);
 }
+
 window.requestAnimationFrame(animationFrame);
