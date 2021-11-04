@@ -2,17 +2,19 @@ import * as THREE from 'three';
 import { Vector3 } from 'three';
 
 class Cube {
-  speed: THREE.Vector3;
+  speed: number;
   mesh: THREE.Mesh;
 
   constructor() {
-    const geometry = new THREE.BoxGeometry();
+    const geometry = new THREE.BoxGeometry(1, 4, 1);
     const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
     const cube = new THREE.Mesh(geometry, material);
-    cube.position.x = -2;
+    cube.translateY(2);
+    cube.geometry.translate(0, -2, 0);
+    cube.rotation.z = 1;
     this.mesh = cube;
 
-    this.speed = new THREE.Vector3(0, 0, 0);
+    this.speed = 0;
   }
 }
 
@@ -47,14 +49,11 @@ function animationFrame(time: number) {
 }
 
 function update(deltaTime: number) {
-  const rotationSpeed = 0.001;
-  cube.mesh.rotation.x += deltaTime * rotationSpeed;
-  cube.mesh.rotation.y += deltaTime * rotationSpeed;
-
-  const frequency = 0.002;
-  const accelerationX = -cube.mesh.position.x * frequency;
-  cube.speed.x += accelerationX;
-  cube.mesh.position.x += cube.speed.x;
+  const frequency = 0.00002;
+  const acceleration = -cube.mesh.rotation.z * frequency;
+  cube.speed += acceleration;
+  cube.mesh.rotation.z += deltaTime * cube.speed;
+  // cube.mesh.rotation.y += deltaTime * cube.speed;
 }
 
 window.requestAnimationFrame(animationFrame);
