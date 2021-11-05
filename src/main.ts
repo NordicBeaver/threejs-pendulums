@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { Pendulum } from './pendulum';
+import { createPendulum } from './pendulum';
 
 import { createGround } from './ground';
 
@@ -42,7 +42,7 @@ async function main() {
   const ground = await createGround();
   scene.add(ground);
 
-  const pendulum = new Pendulum(scene);
+  const pendulum = await createPendulum(scene);
 
   let startTime: number | null = null;
   let lastFrameTime: number | null = null;
