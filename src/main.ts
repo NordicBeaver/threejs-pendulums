@@ -1,15 +1,9 @@
 import * as THREE from 'three';
 import { Pendulum } from './pendulum';
 
-import woodTextureColorPath from 'url:./public/wood_color.jpg';
+import { createGround } from './ground';
 
 async function main() {
-  const loader = new THREE.TextureLoader();
-  const woodTextureColor = await loader.loadAsync(woodTextureColorPath);
-  woodTextureColor.wrapS = THREE.RepeatWrapping;
-  woodTextureColor.wrapT = THREE.RepeatWrapping;
-  woodTextureColor.repeat.set(100, 10);
-
   const sceneCanvas = document.getElementById('sceneCanvas') as HTMLCanvasElement;
   sceneCanvas.width = window.innerWidth;
   sceneCanvas.height = 800;
@@ -21,22 +15,15 @@ async function main() {
 
   scene.background = new THREE.Color(0xeeeeee);
 
-  const light = new THREE.AmbientLight(0xdddddd, 0.4);
-  scene.add(light);
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+  // const light = new THREE.AmbientLight(0xdddddd, 0.4);
+  // scene.add(light);
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
   directionalLight.position.set(40, 100, 40);
   directionalLight.castShadow = true;
   scene.add(directionalLight);
 
-  const planeGeometry = new THREE.PlaneGeometry(1000, 100);
-  const planeMaterial = new THREE.MeshStandardMaterial({
-    map: woodTextureColor,
-  });
-  const plane = new THREE.Mesh(planeGeometry, planeMaterial);
-  plane.receiveShadow = true;
-  plane.rotation.x = -Math.PI / 2;
-  plane.position.y = -5;
-  scene.add(plane);
+  const ground = await createGround();
+  scene.add(ground);
 
   const pendulum = new Pendulum(scene);
 
