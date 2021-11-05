@@ -30,7 +30,7 @@ async function createBallMesh(scene: THREE.Scene) {
   return ball;
 }
 
-class Pendulum {
+export class Pendulum {
   private string: THREE.Mesh;
   private ball: THREE.Mesh;
   frequency: number;

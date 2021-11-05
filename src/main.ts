@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { createPendulum } from './pendulum';
+import { createPendulum, Pendulum } from './pendulum';
 
 import { createGround } from './ground';
 
@@ -35,14 +35,22 @@ async function main() {
   const light = new THREE.AmbientLight(0xdddddd, 0.4);
   scene.add(light);
   const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-  directionalLight.position.set(40, 100, 40);
+  directionalLight.position.set(4, 10, 4);
+  directionalLight.shadow.camera.top = 20;
+  directionalLight.shadow.camera.right = 20;
+  directionalLight.shadow.camera.bottom = -20;
+  directionalLight.shadow.camera.left = -20;
   directionalLight.castShadow = true;
   scene.add(directionalLight);
 
   const ground = await createGround();
   scene.add(ground);
 
-  const pendulum = await createPendulum(scene, new THREE.Vector3(0, 0, 0), 1);
+  const pendulums: Pendulum[] = [];
+  for (let i = 0; i < 12; i++) {
+    const pendulum = await createPendulum(scene, new THREE.Vector3(0, 0, -i * 1.2), 1);
+    pendulums.push(pendulum);
+  }
 
   scene.fog = new THREE.Fog(0xffffff, 1, 80);
 
@@ -64,7 +72,9 @@ async function main() {
   }
 
   function update(deltaTime: number, totalTime: number) {
-    pendulum.update(totalTime);
+    pendulums.forEach((p) => {
+      p.update(totalTime);
+    });
   }
 
   window.requestAnimationFrame(animationFrame);
