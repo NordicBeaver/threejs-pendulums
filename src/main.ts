@@ -10,9 +10,11 @@ async function main() {
 
   const scene = new THREE.Scene();
 
-  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.z = 4;
+  const aspect = window.innerWidth / window.innerHeight;
+  const camera = new THREE.PerspectiveCamera(75, aspect, 0.1, 1000);
+  camera.position.z = Math.max(8 / aspect, 6);
   camera.position.y = 0.5;
+  camera.lookAt(0, 0, 0);
 
   const renderer = new THREE.WebGLRenderer({ canvas: sceneCanvas, antialias: true });
   renderer.shadowMap.enabled = true;
@@ -20,7 +22,10 @@ async function main() {
   window.addEventListener('resize', () => {
     sceneCanvas.width = window.innerWidth;
     sceneCanvas.height = window.innerHeight;
-    camera.aspect = window.innerWidth / window.innerHeight;
+    const aspect = window.innerWidth / window.innerHeight;
+    camera.aspect = aspect;
+    camera.position.z = Math.max(8 / aspect, 6);
+    camera.lookAt(0, 0, 0);
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
   });
@@ -38,8 +43,6 @@ async function main() {
   scene.add(ground);
 
   const pendulum = new Pendulum(scene);
-
-  camera.rotation.x = -Math.PI / 7;
 
   let startTime: number | null = null;
   let lastFrameTime: number | null = null;
