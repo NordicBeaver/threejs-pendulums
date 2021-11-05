@@ -15,8 +15,8 @@ async function main() {
 
   scene.background = new THREE.Color(0xeeeeee);
 
-  // const light = new THREE.AmbientLight(0xdddddd, 0.4);
-  // scene.add(light);
+  const light = new THREE.AmbientLight(0xdddddd, 0.4);
+  scene.add(light);
   const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
   directionalLight.position.set(40, 100, 40);
   directionalLight.castShadow = true;
@@ -28,9 +28,9 @@ async function main() {
   const pendulum = new Pendulum(scene);
 
   camera.position.z = 4;
-  camera.position.y = 1.5;
+  camera.position.y = 0.5;
 
-  camera.rotation.x = -Math.PI / 6;
+  camera.rotation.x = -Math.PI / 7;
 
   let startTime: number | null = null;
   let lastFrameTime: number | null = null;

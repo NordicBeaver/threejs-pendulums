@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 function createStringMesh(scene: THREE.Scene) {
-  const geometry = new THREE.CylinderGeometry(0.01, 0.01, 4);
+  const geometry = new THREE.CylinderGeometry(0.01, 0.01, 8);
   const material = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0, metalness: 0.2 });
   const string = new THREE.Mesh(geometry, material);
   string.castShadow = true;
@@ -22,23 +22,25 @@ export class Pendulum {
   private string: THREE.Mesh;
   private ball: THREE.Mesh;
   frequency: number;
+  amplitude: number;
 
   constructor(scene: THREE.Scene) {
     const stringMesh = createStringMesh(scene);
-    stringMesh.translateY(2);
-    stringMesh.geometry.translate(0, -2, 0);
+    stringMesh.translateY(6);
+    stringMesh.geometry.translate(0, -4, 0);
     this.string = stringMesh;
 
     const ballMesh = createBallMesh(scene);
-    ballMesh.translateY(2);
-    ballMesh.geometry.translate(0, -4.5, 0);
+    ballMesh.translateY(6);
+    ballMesh.geometry.translate(0, -8.5, 0);
     this.ball = ballMesh;
 
     this.frequency = 0.001;
+    this.amplitude = 0.5;
   }
 
   update(totalTime: number) {
-    this.string.rotation.z = Math.cos(this.frequency * totalTime);
-    this.ball.rotation.z = Math.cos(this.frequency * totalTime);
+    this.string.rotation.z = this.amplitude * Math.cos(this.frequency * totalTime);
+    this.ball.rotation.z = this.amplitude * Math.cos(this.frequency * totalTime);
   }
 }
