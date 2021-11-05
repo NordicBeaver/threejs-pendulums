@@ -1,34 +1,35 @@
 import * as THREE from 'three';
 
-import woodTextureColorPath from 'url:./public/wood_color.jpg';
-import woodTextureRoughnessPath from 'url:./public/wood_roughness.jpg';
-import woodTextureNormalPath from 'url:./public/wood_normal.jpg';
+import textureColorPath from 'url:./public/paving_color.jpg';
+import textureRoughnessPath from 'url:./public/paving_roughness.jpg';
+import textureNormalPath from 'url:./public/paving_normal.jpg';
+import textureAmbientOcclusionPath from 'url:./public/paving_ambient_occlusion.jpg';
+
+async function loadTexture(loader: THREE.TextureLoader, url: string) {
+  const texture = await loader.loadAsync(url);
+  texture.wrapS = THREE.RepeatWrapping;
+  texture.wrapT = THREE.RepeatWrapping;
+  texture.repeat.set(100, 10);
+  return texture;
+}
 
 export async function createGround() {
   const loader = new THREE.TextureLoader();
 
-  const woodTextureColor = await loader.loadAsync(woodTextureColorPath);
-  woodTextureColor.wrapS = THREE.RepeatWrapping;
-  woodTextureColor.wrapT = THREE.RepeatWrapping;
-  woodTextureColor.repeat.set(100, 10);
-
-  const woodTextureRoughness = await loader.loadAsync(woodTextureRoughnessPath);
-  woodTextureRoughness.wrapS = THREE.RepeatWrapping;
-  woodTextureRoughness.wrapT = THREE.RepeatWrapping;
-  woodTextureRoughness.repeat.set(100, 10);
-
-  const woodTextureNormal = await loader.loadAsync(woodTextureNormalPath);
-  woodTextureNormal.wrapS = THREE.RepeatWrapping;
-  woodTextureNormal.wrapT = THREE.RepeatWrapping;
-  woodTextureNormal.repeat.set(100, 10);
+  const textureColor = await loadTexture(loader, textureColorPath);
+  const textureRoughness = await loadTexture(loader, textureRoughnessPath);
+  const textureNormal = await loadTexture(loader, textureNormalPath);
+  const textureAmbientOcclusion = await loadTexture(loader, textureAmbientOcclusionPath);
 
   const planeGeometry = new THREE.PlaneGeometry(1000, 100);
   const planeMaterial = new THREE.MeshStandardMaterial({
-    map: woodTextureColor,
-    normalMap: woodTextureNormal,
-    normalScale: new THREE.Vector2(5, 5),
+    map: textureColor,
+    normalMap: textureNormal,
+    normalScale: new THREE.Vector2(2, 2),
     roughness: 1,
-    roughnessMap: woodTextureRoughness,
+    roughnessMap: textureRoughness,
+    aoMap: textureAmbientOcclusion,
+    aoMapIntensity: 1,
   });
   const mesh = new THREE.Mesh(planeGeometry, planeMaterial);
 
