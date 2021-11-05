@@ -4,10 +4,9 @@ import marbleTextureColorPath from 'url:./public/marble_color.jpg';
 import marbleTextureRoughnessPath from 'url:./public/marble_roughness.jpg';
 
 function createStringMesh(scene: THREE.Scene) {
-  const geometry = new THREE.CylinderGeometry(0.01, 0.01, 8);
+  const geometry = new THREE.CylinderGeometry(0.001, 0.001, 8);
   const material = new THREE.MeshStandardMaterial({ color: 0x222222, roughness: 0, metalness: 0.2 });
   const string = new THREE.Mesh(geometry, material);
-  string.castShadow = true;
   scene.add(string);
   return string;
 }
