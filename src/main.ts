@@ -6,12 +6,24 @@ import { createGround } from './ground';
 async function main() {
   const sceneCanvas = document.getElementById('sceneCanvas') as HTMLCanvasElement;
   sceneCanvas.width = window.innerWidth;
-  sceneCanvas.height = 800;
+  sceneCanvas.height = window.innerHeight;
 
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / 800, 0.1, 1000);
+
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera.position.z = 4;
+  camera.position.y = 0.5;
+
   const renderer = new THREE.WebGLRenderer({ canvas: sceneCanvas, antialias: true });
   renderer.shadowMap.enabled = true;
+
+  window.addEventListener('resize', () => {
+    sceneCanvas.width = window.innerWidth;
+    sceneCanvas.height = window.innerHeight;
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
 
   scene.background = new THREE.Color(0xeeeeee);
 
@@ -26,9 +38,6 @@ async function main() {
   scene.add(ground);
 
   const pendulum = new Pendulum(scene);
-
-  camera.position.z = 4;
-  camera.position.y = 0.5;
 
   camera.rotation.x = -Math.PI / 7;
 
