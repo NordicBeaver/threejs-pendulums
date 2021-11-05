@@ -44,6 +44,8 @@ async function main() {
 
   const pendulum = await createPendulum(scene);
 
+  scene.fog = new THREE.Fog(0xffffff, 1, 80);
+
   let startTime: number | null = null;
   let lastFrameTime: number | null = null;
   function animationFrame(time: number) {
