@@ -48,7 +48,7 @@ async function main() {
 
   const pendulums: Pendulum[] = [];
   for (let i = 0; i < 12; i++) {
-    const pendulum = await createPendulum(scene, new THREE.Vector3(0, 0, -i * 1.2), 1);
+    const pendulum = await createPendulum(scene, new THREE.Vector3(0, 0, -i * 1.2), 1.2 + i * 0.05);
     pendulums.push(pendulum);
   }
 
