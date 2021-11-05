@@ -10,7 +10,7 @@ async function main() {
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth / 800, 0.1, 1000);
-  const renderer = new THREE.WebGLRenderer({ canvas: sceneCanvas });
+  const renderer = new THREE.WebGLRenderer({ canvas: sceneCanvas, antialias: true });
   renderer.shadowMap.enabled = true;
 
   scene.background = new THREE.Color(0xeeeeee);
