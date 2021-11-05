@@ -42,7 +42,7 @@ async function main() {
   const ground = await createGround();
   scene.add(ground);
 
-  const pendulum = await createPendulum(scene);
+  const pendulum = await createPendulum(scene, new THREE.Vector3(0, 0, 0), 1);
 
   scene.fog = new THREE.Fog(0xffffff, 1, 80);
 

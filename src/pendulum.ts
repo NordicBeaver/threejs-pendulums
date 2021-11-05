@@ -44,22 +44,26 @@ class Pendulum {
   }
 
   update(totalTime: number) {
-    this.string.rotation.z = this.amplitude * Math.cos(this.frequency * totalTime);
-    this.ball.rotation.z = this.amplitude * Math.cos(this.frequency * totalTime);
+    this.string.rotation.z = this.amplitude * Math.cos((this.frequency * totalTime) / 1000);
+    this.ball.rotation.z = this.amplitude * Math.cos((this.frequency * totalTime) / 1000);
   }
 }
 
-export async function createPendulum(scene: THREE.Scene) {
+export async function createPendulum(
+  scene: THREE.Scene,
+  origin: THREE.Vector3,
+  frequency: number = 1,
+  amplitude: number = 0.5
+) {
   const stringMesh = createStringMesh(scene);
+  stringMesh.position.add(origin);
   stringMesh.translateY(6);
   stringMesh.geometry.translate(0, -4, 0);
 
   const ballMesh = await createBallMesh(scene);
+  ballMesh.position.add(origin);
   ballMesh.translateY(6);
   ballMesh.geometry.translate(0, -8.5, 0);
-
-  const frequency = 0.001;
-  const amplitude = 0.5;
 
   const pendulum = new Pendulum(stringMesh, ballMesh, frequency, amplitude);
   return pendulum;
