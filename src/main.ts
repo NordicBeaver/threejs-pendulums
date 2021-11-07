@@ -12,9 +12,9 @@ async function main() {
 
   const aspect = window.innerWidth / window.innerHeight;
   const camera = new THREE.PerspectiveCamera(75, aspect, 0.1, 1000);
-  camera.position.z = Math.max(8 / aspect, 6);
-  camera.position.y = 0.5;
-  camera.lookAt(0, 0, 0);
+  camera.position.z = Math.max(7 / aspect, 5);
+  camera.position.y = 1;
+  camera.lookAt(0, -1, 0);
 
   const renderer = new THREE.WebGLRenderer({ canvas: sceneCanvas, antialias: true });
   renderer.shadowMap.enabled = true;
@@ -30,7 +30,7 @@ async function main() {
     renderer.setSize(window.innerWidth, window.innerHeight);
   });
 
-  scene.background = new THREE.Color(0xeeeeee);
+  scene.background = new THREE.Color(0xc7dcff);
 
   const light = new THREE.AmbientLight(0xdddddd, 0.4);
   scene.add(light);
@@ -52,7 +52,7 @@ async function main() {
     pendulums.push(pendulum);
   }
 
-  scene.fog = new THREE.Fog(0xffffff, 1, 80);
+  scene.fog = new THREE.Fog(0xc7dcff, 1, 80);
 
   let startTime: number | null = null;
   let lastFrameTime: number | null = null;
