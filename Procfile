@@ -1,1 +1,1 @@
-web: yarn start:dokku -p $PORT
+web: npm run start:dokku -- -p $PORT
