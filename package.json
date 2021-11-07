@@ -4,15 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "parcel src/index.html"
+    "start": "parcel src/index.html",
+    "start:dokku": "serve dist",
+    "build": "parcel build src/index.html",
+    "prebuild": "rimraf dist"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "parcel": "^2.0.0"
+    "parcel": "^2.0.0",
+    "rimraf": "^3.0.2"
   },
   "dependencies": {
     "@types/three": "^0.133.1",
+    "serve": "^13.0.2",
     "three": "^0.134.0"
   }
 }
